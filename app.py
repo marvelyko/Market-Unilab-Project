@@ -25,5 +25,6 @@ def create_tables():
 if __name__ == "__main__":
     from db import db
     db.init_app(app)
+    print("flask")
 
     app.run(port = 5050, debug = True)
