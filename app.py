@@ -20,7 +20,7 @@ api.add_resource(ItemList, "/product")
 @app.before_first_request
 def create_tables():
     db.create_all()
-
+#comment
 
 if __name__ == "__main__":
     from db import db
