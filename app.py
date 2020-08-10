@@ -26,4 +26,9 @@ if __name__ == "__main__":
     from db import db
     db.init_app(app)
 
+    print("rame")
+    print("rame")
+    print("rame")
+    print("rame")
+
     app.run(port = 5050, debug = True)
