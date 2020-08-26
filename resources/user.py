@@ -5,7 +5,7 @@ from models.user import UserModel
 
 
 
-class Item(Resource):
+class User(Resource):
     TABLE_NAME = 'users'
     parser = reqparse.RequestParser()
     parser.add_argument('username',

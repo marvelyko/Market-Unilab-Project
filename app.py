@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect
 from flask_restful import Api
 from flask_jwt import JWT
 
@@ -14,8 +14,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 jwt = JWT(app, authenticate, identity)
 api = Api(app)
 
+@app.route('/')
+def redirect2url():
+    return redirect("https://github.com/marvelyko/Market-Unilab-Project")
+
 api.add_resource(Item, '/products/<string:name>')
-api.add_resource(ItemList, "/product")
+api.add_resource(ItemList, '/products')
 
 @app.before_first_request
 def create_tables():

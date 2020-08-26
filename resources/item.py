@@ -13,6 +13,8 @@ class Item(Resource):
                         required=True,
                         help="გთხოვთ შეიყვანოთ პროდუქტის ღირებულება")
 
+
+
     def get(self, name):
         item = ItemModel.find_by_name(name)
         if item:
@@ -25,10 +27,10 @@ class Item(Resource):
 
         data = self.parser.parse_args()
 
-        item = ItemModel(name, data['price'])
+        item = ItemModel(1, name, data['price'])
 
         try:
-            self.save_to_db()
+            item.save_to_db()
         except Exception as e:
             return {"message": f"{e}"}
         else:
@@ -42,7 +44,7 @@ class Item(Resource):
         if item:
             item.price=data['price']
         else:
-            item = ItemModel(name, data['price'])
+            item = ItemModel(1, name, data['price'])
 
         item.save_to_db()
 
@@ -54,30 +56,38 @@ class Item(Resource):
         if item:
             item.delete_from_db()
             return {'message': 'მონაცემი წარმატებით წაიშალა.'}
-
         else:
             return {'message': 'მონაცემი ბაზაში ვერ მოიძებნა.'}
 
 
+# class ItemList(Resource):
+#     @jwt_required()
+#     def get(self):
+#         conn = sqlite3.connect('data.db')
+#         cursor = conn.cursor()
+#
+#         results = cursor.execute("SELECT * FROM store ORDER BY ღირებულება")
+#
+#         items = []
+#
+#         for item in results:
+#             items.append({
+#                 "დასახელება": item[0],
+#                 "ღირებულება": item[1],
+#                 "რაოდენობა": item[2]
+#             })
+#
+#         conn.close()
+#         print(items)
+#
+#         return {"მენიუ": items}
+
 class ItemList(Resource):
     @jwt_required()
     def get(self):
-        conn = sqlite3.connect('data.db')
-        cursor = conn.cursor()
 
-        results = cursor.execute("SELECT * FROM store ORDER BY ღირებულება")
-
-        items = []
-
-        for item in results:
-            items.append({
-                "დასახელება": item[0],
-                "ღირებულება": item[1],
-                "რაოდენობა": item[2]
-            })
-
-        conn.close()
-        print(items)
-
-        return {"მენიუ": items}
-
+        items = ItemModel.get_db()
+        _items = []
+        for item in items:
+            _items.append(item.json())
+        return {"message": _items}
