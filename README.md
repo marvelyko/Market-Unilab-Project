@@ -5,6 +5,17 @@ This is Flask Web Server for my Market Project.
 Template project for a market
 
 **Methods**:
-POST: _/item_
+
+GET: _/products_
+
+GET: _/product_/<name_of_the_product>
+
+POST: _/product_/<name_of_the_product>
+'price' _type:_ float
+
+PUT: _/product_/<name_of_the_product>
+'price' _type:_ float
+
+DELETE: _/product_/<name_of_the_product>
 'price' _type:_ float
 
